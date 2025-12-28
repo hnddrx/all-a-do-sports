@@ -31,7 +31,6 @@ const Chatbot = ({ darkMode }) => {
 
   const getBotResponse = (userMessage) => {
     const lowerMessage = userMessage.toLowerCase();
-    
     if (lowerMessage.includes('tournament') || lowerMessage.includes('register')) {
       return "Great! I can help you with tournament registration. We specialize in golf tournament photography and videography. Would you like to register for an upcoming event or learn more about our tournament packages?";
     } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
@@ -60,7 +59,6 @@ const Chatbot = ({ darkMode }) => {
     setMessages([...messages, userMessage]);
     setInputValue('');
 
-    // Simulate bot thinking
     setTimeout(() => {
       const botMessage = {
         id: messages.length + 2,
@@ -101,7 +99,7 @@ const Chatbot = ({ darkMode }) => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 p-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 z-50"
+          className="fixed bottom-4 right-4 p-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 z-50"
           aria-label="Open chat"
         >
           <MessageCircle className="w-6 h-6" />
@@ -110,7 +108,7 @@ const Chatbot = ({ darkMode }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className={`fixed bottom-6 right-6 w-96 h-[600px] ${theme.bg} ${theme.border} border rounded-2xl shadow-2xl flex flex-col z-50 animate-in slide-in-from-bottom-4 duration-300`}>
+        <div className={`fixed bottom-4 right-4 w-full max-w-sm sm:max-w-md md:w-96 h-[80vh] md:h-[600px] ${theme.bg} ${theme.border} border rounded-2xl shadow-2xl flex flex-col z-50 animate-in slide-in-from-bottom-4 duration-300`}>
           {/* Header */}
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -118,8 +116,8 @@ const Chatbot = ({ darkMode }) => {
                 <Bot className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-semibold">Aerial Assistant</h3>
-                <p className="text-xs text-white/80">Online</p>
+                <h3 className="font-semibold text-sm sm:text-base">Aerial Assistant</h3>
+                <p className="text-xs sm:text-sm text-white/80">Online</p>
               </div>
             </div>
             <button
@@ -131,7 +129,7 @@ const Chatbot = ({ darkMode }) => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -146,16 +144,10 @@ const Chatbot = ({ darkMode }) => {
                     )}
                   </div>
                   <div>
-                    <div
-                      className={`px-4 py-2 rounded-2xl ${
-                        message.sender === 'user'
-                          ? `${theme.userBg} text-white`
-                          : `${theme.messageBg} ${theme.text}`
-                      }`}
-                    >
-                      <p className="text-sm whitespace-pre-line">{message.text}</p>
+                    <div className={`px-3 sm:px-4 py-2 rounded-2xl ${message.sender === 'user' ? `${theme.userBg} text-white` : `${theme.messageBg} ${theme.text}`}`}>
+                      <p className="text-sm sm:text-base whitespace-pre-line">{message.text}</p>
                     </div>
-                    <p className={`text-xs ${theme.subtext} mt-1 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                    <p className={`text-xs sm:text-sm ${theme.subtext} mt-1 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -167,14 +159,14 @@ const Chatbot = ({ darkMode }) => {
 
           {/* Quick Replies */}
           {messages.length <= 2 && (
-            <div className="px-4 pb-2">
-              <p className={`text-xs ${theme.subtext} mb-2`}>Quick replies:</p>
+            <div className="px-3 sm:px-4 pb-2">
+              <p className={`text-xs sm:text-sm ${theme.subtext} mb-2`}>Quick replies:</p>
               <div className="flex flex-wrap gap-2">
                 {quickReplies.map((reply, index) => (
                   <button
                     key={index}
                     onClick={() => handleQuickReply(reply)}
-                    className={`text-xs px-3 py-1.5 ${theme.inputBg} ${theme.text} rounded-full hover:bg-cyan-500 hover:text-white transition-colors`}
+                    className={`text-xs sm:text-sm px-3 py-1.5 ${theme.inputBg} ${theme.text} rounded-full hover:bg-cyan-500 hover:text-white transition-colors`}
                   >
                     {reply}
                   </button>
@@ -184,7 +176,7 @@ const Chatbot = ({ darkMode }) => {
           )}
 
           {/* Input */}
-          <div className={`p-4 ${theme.border} border-t`}>
+          <div className={`p-3 sm:p-4 ${theme.border} border-t`}>
             <div className="flex space-x-2">
               <input
                 type="text"
@@ -192,13 +184,13 @@ const Chatbot = ({ darkMode }) => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Type a message..."
-                className={`flex-1 px-4 py-2 ${theme.inputBg} ${theme.text} rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-500`}
+                className={`flex-1 px-3 sm:px-4 py-2 ${theme.inputBg} ${theme.text} rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm sm:text-base`}
               />
               <button
                 onClick={handleSend}
                 className="p-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full hover:scale-110 transition-transform"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
