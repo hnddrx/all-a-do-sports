@@ -1,7 +1,8 @@
 import React from 'react';
 import { Camera, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
 
-const Footer = ({ theme }) => {
+
+const Footer = ({ mobileMenuOpen, setMobileMenuOpen, theme}) => {
   const navLinks = ['Home', 'Gallery', 'Services', 'About', 'Contact'];
 
   return (
