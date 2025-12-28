@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
+import { MessageCircle, X, Send } from 'lucide-react';
 
 const Chatbot = ({ darkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,8 +7,7 @@ const Chatbot = ({ darkMode }) => {
     {
       id: 1,
       text: "Hi! 👋 I'm your Aerial Stories AI assistant. How can I help you today?",
-      sender: 'bot',
-      timestamp: new Date()
+      sender: 'bot'
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -19,43 +18,25 @@ const Chatbot = ({ darkMode }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const quickReplies = [
-    'Tournament registration',
-    'Pricing information',
-    'Available services',
-    'Contact details'
-  ];
-
-  // 🚨 DIRECT GEN-AI CALL (client-side)
   const getAIResponse = async (userText) => {
     try {
-      const token = process.env.REACT_APP_OPENAI_API_KEY;
-      
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
           messages: [
             {
               role: 'system',
               content:
                 'You are Aerial Stories AI assistant. Help users with services, pricing, tournaments, and contact details. Be friendly and professional.'
             },
-            ...messages.map(m => ({
-              role: m.sender === 'user' ? 'user' : 'assistant',
-              content: m.text
-            })),
             { role: 'user', content: userText }
           ]
         })
       });
 
       const data = await res.json();
-      return data.choices[0].message.content;
+      return data.reply;
     } catch {
       return "Sorry, I’m having trouble responding right now.";
     }
@@ -67,8 +48,7 @@ const Chatbot = ({ darkMode }) => {
     const userMessage = {
       id: messages.length + 1,
       text: inputValue,
-      sender: 'user',
-      timestamp: new Date()
+      sender: 'user'
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -80,36 +60,30 @@ const Chatbot = ({ darkMode }) => {
     const botMessage = {
       id: messages.length + 2,
       text: aiReply,
-      sender: 'bot',
-      timestamp: new Date()
+      sender: 'bot'
     };
 
     setMessages(prev => [...prev, botMessage]);
     setLoading(false);
   };
 
-  const handleQuickReply = (reply) => {
-    setInputValue(reply);
-    setTimeout(handleSend, 0);
-  };
-
-  const theme = darkMode ? {
-    bg: 'bg-slate-900',
-    text: 'text-slate-100',
-    subtext: 'text-slate-400',
-    inputBg: 'bg-slate-800',
-    messageBg: 'bg-slate-800',
-    userBg: 'bg-cyan-600',
-    border: 'border-slate-700'
-  } : {
-    bg: 'bg-white',
-    text: 'text-gray-900',
-    subtext: 'text-gray-600',
-    inputBg: 'bg-gray-100',
-    messageBg: 'bg-gray-100',
-    userBg: 'bg-blue-600',
-    border: 'border-gray-300'
-  };
+  const theme = darkMode
+    ? {
+        bg: 'bg-slate-900',
+        text: 'text-slate-100',
+        inputBg: 'bg-slate-800',
+        messageBg: 'bg-slate-800',
+        userBg: 'bg-cyan-600',
+        border: 'border-slate-700'
+      }
+    : {
+        bg: 'bg-white',
+        text: 'text-gray-900',
+        inputBg: 'bg-gray-100',
+        messageBg: 'bg-gray-100',
+        userBg: 'bg-blue-600',
+        border: 'border-gray-300'
+      };
 
   return (
     <>
@@ -118,7 +92,7 @@ const Chatbot = ({ darkMode }) => {
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 p-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full shadow-2xl z-50"
         >
-          <MessageCircle className="w-6 h-6" />
+          <MessageCircle />
         </button>
       )}
 
@@ -155,7 +129,7 @@ const Chatbot = ({ darkMode }) => {
                 className={`flex-1 px-4 py-2 ${theme.inputBg} ${theme.text} rounded-full`}
               />
               <button onClick={handleSend} className="p-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full">
-                <Send className="w-5 h-5" />
+                <Send />
               </button>
             </div>
           </div>
