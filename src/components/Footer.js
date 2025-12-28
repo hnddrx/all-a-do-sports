@@ -46,7 +46,7 @@ const Footer = ({ theme }) => {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div id='contact'>
             <h4 className="text-white font-light text-lg mb-4">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3 text-sm">

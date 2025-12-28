@@ -2,7 +2,7 @@ import React from 'react';
 
 const GalleryGrid = ({ filteredImages, openLightbox, darkMode, theme }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
+    <div id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {filteredImages.map((image, index) => (
           <div
