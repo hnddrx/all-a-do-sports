@@ -7,8 +7,8 @@ import Footer from './Footer';
 import Lightbox from './Lightbox';
 import Chatbot from './Chatbot';
 import TournamentRegistration from './TournamentRegistration';
-import imagesData from '../data/images.json';
 import About from '../pages/About';
+import imagesData from '../data/images.json';
 
 const DroneGallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -98,7 +98,7 @@ const DroneGallery = () => {
         theme={t}
       />
       
-    <About darkMode={darkMode} theme={t} setShowRegistration={setShowRegistration} />
+      <About darkMode={darkMode} theme={t} setShowRegistration={setShowRegistration} />
 
       <Footer theme={t} />
       

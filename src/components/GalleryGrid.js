@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GalleryGrid = ({ filteredImages, openLightbox, mobileMenuOpen,  setMobileMenuOpen, theme, darkMode}) => {
+const GalleryGrid = ({ filteredImages, openLightbox, theme, darkMode}) => {
   
   return (
     <div id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
